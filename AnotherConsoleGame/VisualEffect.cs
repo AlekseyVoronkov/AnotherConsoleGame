@@ -10,12 +10,14 @@ namespace AnotherConsoleGame
     {
         public char Symbol { get; }
         public (int x, int y)[] Positions { get; }
+        public ConsoleColor Color { get; }
         public DateTime ExpireTime { get; }
 
-        public VisualEffect(char symbol, (int x, int y)[] positions, int durationMs)
+        public VisualEffect(char symbol, (int x, int y)[] positions, ConsoleColor color, int durationMs)
         {
             Symbol = symbol;
             Positions = positions;
+            Color = color;
             ExpireTime = DateTime.Now.AddMilliseconds(durationMs);
         }
 

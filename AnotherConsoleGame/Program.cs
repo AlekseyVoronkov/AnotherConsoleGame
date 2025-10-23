@@ -12,18 +12,39 @@ namespace AnotherConsoleGame
         {
             Player player = new Player();
             EffectManager effectManager = new EffectManager();
-            ObjectsRenderer objectsRenderer = new ObjectsRenderer();
+            ConsoleRenderer consoleRenderer = new ConsoleRenderer(Constants.mapSize.sizeX, Constants.mapSize.sizeY);
             Map map = new Map();
             map.CreateMapFile();
             
-            Console.SetWindowSize(100, 40);
+            Console.SetWindowSize(Constants.mapSize.sizeX, Constants.mapSize.sizeY);
 
             while (true)
             {
                 InputHandler.HandleControll(player, map, effectManager);
                 effectManager.Update();
-                objectsRenderer.DrawCycle(player, map, effectManager);
-                Thread.Sleep(50);
+                var mapData = map.GetMap();
+                consoleRenderer.BeginFrame();
+
+                for (int y = 0; y < Constants.mapSize.sizeY; y++)
+                {
+                    for (int x = 0; x < Constants.mapSize.sizeX; x++)
+                    {
+                        consoleRenderer.Draw(x, y, mapData[x, y], ConsoleColor.Gray);
+                    }
+                }
+
+                foreach (var effect in effectManager.GetActiveEffects())
+                {
+                    foreach (var pos in effect.Positions)
+                    {
+                        consoleRenderer.Draw(pos.x, pos.y, effect.Symbol, effect.Color);
+                    }
+                }
+
+                consoleRenderer.Draw(player.Position.coordinateX, player.Position.coordinateY, Constants.playerTile, ConsoleColor.DarkCyan);
+                consoleRenderer.PresentFrame();
+
+                Thread.Sleep(Constants.frameDelay);
             }
         }
     }

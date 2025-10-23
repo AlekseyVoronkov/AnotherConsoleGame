@@ -47,9 +47,9 @@ namespace AnotherConsoleGame
                 dashTrailCoords.Add((Position.coordinateX + directionX * i, Position.coordinateY + directionY * i));
             }
 
-            effectManager.AddEffect(new VisualEffect('.', dashTrailCoords.ToArray(), 600));
-            effectManager.AddEffect(new VisualEffect(',', dashTrailCoords.ToArray(), 400));
-            effectManager.AddEffect(new VisualEffect('@', dashTrailCoords.ToArray(), 200));
+            effectManager.AddEffect(new VisualEffect('.', dashTrailCoords.ToArray(), ConsoleColor.DarkGray, 600));
+            effectManager.AddEffect(new VisualEffect(',', dashTrailCoords.ToArray(), ConsoleColor.Gray, 400));
+            effectManager.AddEffect(new VisualEffect('@', dashTrailCoords.ToArray(), ConsoleColor.White, 200));
 
             Position = (Position.coordinateX + directionX * distance, Position.coordinateY + directionY * distance);
         }
@@ -97,7 +97,7 @@ namespace AnotherConsoleGame
                     return;
             }
 
-            var attackEffect = new VisualEffect(attackSymbol, attackCoords, 100);
+            var attackEffect = new VisualEffect(attackSymbol, attackCoords, ConsoleColor.Magenta, 100);
             effectManager.AddEffect(attackEffect);
         }
     }
